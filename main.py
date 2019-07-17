@@ -218,11 +218,11 @@ try:
                         if(isaparaturl(url)):
                             if(hasscheme(url)):
                                 page = AparatPage(url)
-                                print(Style.BRIGHT + "Video qualities are:")
+                                print(Style.BRIGHT + "Availabe video qualities are:")
                                 for quality in page.all_links:
                                     print(quality)
-                                desiredquality = input(Style.BRIGHT + "Which quality do you want to download?\n")
-                                desiredname = input(Style.BRIGHT + "What do you want to name it?(Enter !default to put the default name)\n")
+                                desiredquality = input(Style.BRIGHT + "Enter your desired quality.\n")
+                                desiredname = input(Style.BRIGHT + "Enter your desired name.(Enter !default to put the default name)\n")
                                 page.download_video(desiredquality, desiredname)
                                 print(Style.BRIGHT + Fore.GREEN + "\nFinished downloading!")
 
