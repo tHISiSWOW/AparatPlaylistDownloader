@@ -144,61 +144,64 @@ try:
                             defaultname = None
                             defaultqualityisvalid = None
                             primarypage = AparatPage(url)
-                            albumlinks = primarypage.find_playlist_videos()
-                            defaultqualityinput = input(Style.BRIGHT + "Do you want to set a default quality for all the videos?(y/n)")
+                            if(primarypage.validurl != False):
+                                albumlinks = primarypage.find_playlist_videos()
+                                defaultqualityinput = input(Style.BRIGHT + "Do you want to set a default quality for all the videos?(y/n)")
 
-                            defaultnameinput = input(Style.BRIGHT + "Do you want to let the program automatically set a name for videos by a base name?(y/n)")
-                            
-                            if(defaultqualityinput.lower() == "y"):
-                                flag_defaultquality = True
-                                defaultquality = input(Style.BRIGHT + "Which quality do you want to choose for all the videos?")
-
-                            if(defaultnameinput.lower() == "y"):
-                                flag_defaultname = True
-                                defaultname = input(Style.BRIGHT + "What would be the base name for all the videos?")
-
-                            flag_counter = 0
-                            for link in albumlinks:
-                                page = AparatPage(link)
-                                desiredname = None
-                                desiredquality = None
-                                flag_validquality = None
-                                alternativequality = ""
-                                flag_validalternativequality = None
-                                if(flag_defaultquality != True):
-                                    print("Video qualities are:")
-                                    for quality in page.all_links:
-                                        print(Style.BRIGHT + quality)
-                                    desiredquality = input(Style.BRIGHT + "Which quality do you want to download?\n")
-                                if(flag_defaultname != True):
-                                    desiredname = input(Style.BRIGHT + "What do you want to name it?(Enter !default to put the default name)\n")
-                                if(flag_counter == 0):
-                                    print(Style.BRIGHT + "Trying to download the 1st video!")
-                                elif(flag_counter == 1):
-                                    print(Style.BRIGHT + "Trying to download the 2nd video!")
-                                elif(flag_counter == 2):
-                                    print(Style.BRIGHT + "Trying to download the 3rd video!")
-                                elif(flag_counter > 2):
-                                    print(Style.BRIGHT + "Trying to download the {}th video!".format(flag_counter + 1))
-                                for quality in page.all_links:
-                                    if(str(defaultquality).replace("p", "") + "p" == quality):
-                                        flag_validquality = True
+                                defaultnameinput = input(Style.BRIGHT + "Do you want to let the program automatically set a name for videos by a base name?(y/n)")
                                 
-                                while(flag_validquality != True and flag_defaultquality == True):
-                                    if(flag_validalternativequality == True):
-                                        break
-                                    else:
-                                        alternativequality = input(Style.BRIGHT + Fore.YELLOW + "The default quality looks to be not available for this video. Please choose another quality.\n")
+                                if(defaultqualityinput.lower() == "y"):
+                                    flag_defaultquality = True
+                                    defaultquality = input(Style.BRIGHT + "Which quality do you want to choose for all the videos?")
 
+                                if(defaultnameinput.lower() == "y"):
+                                    flag_defaultname = True
+                                    defaultname = input(Style.BRIGHT + "What would be the base name for all the videos?")
+
+                                flag_counter = 0
+                                for link in albumlinks:
+                                    page = AparatPage(link)
+                                    desiredname = None
+                                    desiredquality = None
+                                    flag_validquality = None
+                                    alternativequality = ""
+                                    flag_validalternativequality = None
+                                    if(flag_defaultquality != True):
+                                        print("Video qualities are:")
                                         for quality in page.all_links:
-                                            if(alternativequality.replace("p", "") + "p" == quality):
-                                                flag_validalternativequality = True
-                                
-                                page.download_video(defaultquality if flag_defaultquality == True and flag_validquality == True else alternativequality if flag_validalternativequality == True else desiredquality if flag_defaultquality != True else desiredquality, defaultname if flag_defaultname == True and flag_counter == 0 else defaultname + str(flag_counter) if flag_defaultname == True and flag_counter > 0 else desiredname if flag_defaultname != True else desiredname)
+                                            print(Style.BRIGHT + quality)
+                                        desiredquality = input(Style.BRIGHT + "Which quality do you want to download?\n")
+                                    if(flag_defaultname != True):
+                                        desiredname = input(Style.BRIGHT + "What do you want to name it?(Enter !default to put the default name)\n")
+                                    if(flag_counter == 0):
+                                        print(Style.BRIGHT + "Trying to download the 1st video!")
+                                    elif(flag_counter == 1):
+                                        print(Style.BRIGHT + "Trying to download the 2nd video!")
+                                    elif(flag_counter == 2):
+                                        print(Style.BRIGHT + "Trying to download the 3rd video!")
+                                    elif(flag_counter > 2):
+                                        print(Style.BRIGHT + "Trying to download the {}th video!".format(flag_counter + 1))
+                                    for quality in page.all_links:
+                                        if(str(defaultquality).replace("p", "") + "p" == quality):
+                                            flag_validquality = True
+                                    
+                                    while(flag_validquality != True and flag_defaultquality == True):
+                                        if(flag_validalternativequality == True):
+                                            break
+                                        else:
+                                            alternativequality = input(Style.BRIGHT + Fore.YELLOW + "The default quality looks to be not available for this video. Please choose another quality.\n")
 
-                                print(Style.BRIGHT + Fore.GREEN + "\nFinished downloading!")
-                                
-                                flag_counter += 1
+                                            for quality in page.all_links:
+                                                if(alternativequality.replace("p", "") + "p" == quality):
+                                                    flag_validalternativequality = True
+                                    
+                                    page.download_video(defaultquality if flag_defaultquality == True and flag_validquality == True else alternativequality if flag_validalternativequality == True else desiredquality if flag_defaultquality != True else desiredquality, defaultname if flag_defaultname == True and flag_counter == 0 else defaultname + str(flag_counter) if flag_defaultname == True and flag_counter > 0 else desiredname if flag_defaultname != True else desiredname)
+
+                                    print(Style.BRIGHT + Fore.GREEN + "\nFinished downloading!")
+                                    
+                                    flag_counter += 1
+                            else:
+                                pass
                     #Defining the exceptions to avoid the mess!
                     except requests.exceptions.MissingSchema:
                         print(Style.BRIGHT + Fore.RED + "You entered a wrong url. Perhaps you have missed http://")

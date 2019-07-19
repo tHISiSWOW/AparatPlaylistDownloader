@@ -10,12 +10,23 @@ from colorama import *
 class AparatPage():
     def __init__(self,page):
         self.page = page
-        self.all_links = self.qualities()
+        checkurl = self.qualities()
+        if("False" in checkurl):
+            splittedcheckurl = checkurl.split(" ")
+            print("Error occured! The code is: " + splittedcheckurl[1])
+            self.validurl = False
+        
+        self.all_links = checkurl
 
     def qualities(self):
         #Download page's source
         print("Attemping to get the page.")
         pagesource = requests.get(self.page)
+        if(pagesource.status_code == 200):
+            pass
+        elif(pagesource.status_code != 200):
+            return "False" + " " + str(pagesource.status_code)
+        
         #putting page source in a soup!
         soup = BeautifulSoup(pagesource.text, "html.parser")
         #trying to extract links
@@ -34,26 +45,29 @@ class AparatPage():
         return linkandquality
 
     def download_video(self,quality,filename):
-        #cheking the users desired quality
-        if(quality == "144" or quality == "144p"):
-            self.__download_file(self.all_links["144p"], filename)
-            
-        elif(quality == "240" or quality == "240p"):
-            self.__download_file(self.all_links["240p"], filename)
+        try:
+            #cheking the users desired quality
+            if(quality == "144" or quality == "144p"):
+                self.__download_file(self.all_links["144p"], filename)
+                
+            elif(quality == "240" or quality == "240p"):
+                self.__download_file(self.all_links["240p"], filename)
 
-        elif(quality == "360" or quality == "360p"):
-            self.__download_file(self.all_links["360p"], filename)
-            
-        elif(quality == "480" or quality == "480p"):
-            self.__download_file(self.all_links["480p"], filename)
+            elif(quality == "360" or quality == "360p"):
+                self.__download_file(self.all_links["360p"], filename)
+                
+            elif(quality == "480" or quality == "480p"):
+                self.__download_file(self.all_links["480p"], filename)
 
-        elif(quality == "720" or quality == "720p"):
-            self.__download_file(self.all_links["720p"], filename)
+            elif(quality == "720" or quality == "720p"):
+                self.__download_file(self.all_links["720p"], filename)
 
-        elif(quality == "1080" or quality == "1080p"):
-            self.__download_file(self.all_links["1080p"], filename)
-        else:
-            print("Invalid input for quality!")
+            elif(quality == "1080" or quality == "1080p"):
+                self.__download_file(self.all_links["1080p"], filename)
+            else:
+                print("Invalid input for quality!")
+        except:
+            print("Error happened for finding the quality!")
 
     def find_playlist_videos(self):
         options = Options()
