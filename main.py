@@ -148,11 +148,11 @@ try:
                                 albumlinks = primarypage.find_playlist_videos()
                                 defaultqualityinput = input(Style.BRIGHT + "Do you want to set a default quality for all the videos?(y/n)")
 
-                                defaultnameinput = input(Style.BRIGHT + "Do you want to let the program automatically set a name for videos by a base name?(y/n)")
+                                defaultnameinput = input(Style.BRIGHT + "Do you want to let the program automatically number videos videos by a base name?(y/n)")
                                 
                                 if(defaultqualityinput.lower() == "y"):
                                     flag_defaultquality = True
-                                    defaultquality = input(Style.BRIGHT + "Which quality do you want to choose for all the videos?")
+                                    defaultquality = input(Style.BRIGHT + "What would be the default quality?")
 
                                 if(defaultnameinput.lower() == "y"):
                                     flag_defaultname = True
