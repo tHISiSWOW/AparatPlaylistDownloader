@@ -1,3 +1,4 @@
+#Main tools of the program are in this module
 #importing libraries
 from bs4 import *
 import requests
