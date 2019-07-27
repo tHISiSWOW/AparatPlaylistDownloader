@@ -1,5 +1,4 @@
-# AparatPlaylistDownloader
-This is Aparat Album Downloader project
+# AparatPlaylistDownloader GUI
 
 Hi, I'm hamids. I am the author of this code
 This code is actually the branch code of cli.
